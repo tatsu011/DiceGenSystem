@@ -19,21 +19,39 @@ namespace SequenceGenerator
             //-M count: generate a number of characters, each interwoven into other characters. -- will be done later.
 
             //Lets roll some dice to start.
+            int Result;
+
             Roll roll = new Roll();
 
-            roll.Die = Dice.d6;
-            Console.WriteLine($"Now rolling {roll}");
-            Console.WriteLine(roll.PerformRoll());
-            Console.WriteLine($"Minimum roll:{roll.GetMinValue()} Maximum roll:{roll.GetMaxValue()} Range: {roll.GetRangeDifference()}");
-
-            roll.Die = Dice.d10;
-            roll.Count = 2;
-            Console.WriteLine($"Now rolling {roll}");
-            Console.WriteLine(roll.PerformRoll());
-            Console.WriteLine($"Minimum roll:{roll.GetMinValue()} Maximum roll:{roll.GetMaxValue()} Range: {roll.GetRangeDifference()}");
+            while (true)
+            {
 
 
-            Console.ReadLine();
+                roll.Die = Dice.d6;
+                Console.WriteLine($"Now rolling {roll}");
+                Result = roll.PerformRoll();
+                Console.WriteLine(Result);
+                Console.WriteLine($"Minimum roll:{roll.GetMinValue()} Maximum roll:{roll.GetMaxValue()} Range: {roll.GetRangeDifference()}");
+
+                roll.Die = Dice.d10;
+                roll.Count = 2;
+                Console.WriteLine($"Now rolling {roll}");
+                Console.WriteLine(roll.PerformRoll());
+                Console.WriteLine($"Minimum roll:{roll.GetMinValue()} Maximum roll:{roll.GetMaxValue()} Range: {roll.GetRangeDifference()}");
+
+                roll.Die = Dice.d20;
+                roll.Count = null;
+                roll.bonus = Result;
+                Console.WriteLine($"Now rolling {roll} which has a bonus of {Result}");
+                Console.WriteLine(roll.PerformRoll());
+                Console.WriteLine($"Minimum roll:{roll.GetMinValue()} Maximum roll:{roll.GetMaxValue()} Range: {roll.GetRangeDifference()}");
+
+
+
+                Console.ReadLine();
+                roll = new Roll(); //reset the dice.
+                Console.Clear();
+            }
         }
     }
 }
