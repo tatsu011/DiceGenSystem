@@ -11,7 +11,18 @@ namespace SequenceGenerator
 
         public Result[] results;
 
+        public bool Validate()
+        {
+            int MinLength = dicecheck.GetRangeDifference();
 
+            int length = 0;
+            foreach(Result r in results)
+            {
+                length += r.Weight;
+            }
+
+            return MinLength <= length;
+        }
 
     }
 

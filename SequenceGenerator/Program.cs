@@ -18,6 +18,8 @@ namespace SequenceGenerator
 
             //-M count: generate a number of characters, each interwoven into other characters. -- will be done later.
 
+            //-D Just roll some dice.  Arguments: idx+b
+
             //Lets roll some dice to start.
             int Result;
 
