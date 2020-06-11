@@ -54,7 +54,11 @@ namespace GeneratorTesting
 
         [TestMethod]
         public void TestDiceIDXY()
-        { 
+        {
+            Roll roll = new Roll();
+            roll.Die = Dice.d6;
+
+
         }
 
         public void TestDiceMIDXY()

@@ -13,10 +13,13 @@ namespace SequenceGenerator
         
         Dictionary<string, string> StrValues;
 
+        List<string> TableRolls;
+
         public Creation()
         {
             IntValues = new Dictionary<string, int>();
             StrValues = new Dictionary<string, string>();
+            TableRolls = new List<string>();
         }
 
 
@@ -42,6 +45,10 @@ namespace SequenceGenerator
             return false;
         }
 
+        public bool HasValue(string target)
+        {
+            return IntValues.ContainsKey(target);
+        }
         public void GetValue(string target, out int Value)
         {
             if (IntValues.ContainsKey(target))
@@ -60,6 +67,13 @@ namespace SequenceGenerator
                 return;
             }
             value = "";
+        }
+
+
+
+        public void AddTableResult(string result)
+        {
+            TableRolls.Add(result);
         }
 
     }

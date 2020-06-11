@@ -7,9 +7,8 @@ using Newtonsoft.Json;
 
 namespace SequenceGenerator
 {
-    static class JsonController
+    static class JsonController<T>
     {
-
 
     }
 }
