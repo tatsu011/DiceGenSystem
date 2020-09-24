@@ -1,5 +1,6 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using SequenceGenerator;
+using SequenceGenerator.Actions;
 using System.Collections.Generic;
 using System.Runtime.ExceptionServices;
 
@@ -57,6 +58,8 @@ namespace GeneratorTesting
         {
             Roll roll = new Roll();
             roll.Die = Dice.d6;
+            roll.bonus = 3;
+            AssertRollValues(roll, 10, 4, 9, 6);
 
 
         }

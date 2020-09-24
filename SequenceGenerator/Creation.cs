@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace SequenceGenerator
 {
-    sealed class Creation
+    public class Creation
     {
 
         Dictionary<string, int> IntValues;

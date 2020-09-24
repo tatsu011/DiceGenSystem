@@ -18,6 +18,6 @@ namespace SequenceGenerator
 
     enum Operation
     {
-        ADD, SET, SUB, DIV, MULTI
+        ADD, SET, SUB, DIV, MULTI, REMOVE
     }
 }
