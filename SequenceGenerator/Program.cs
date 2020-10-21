@@ -15,6 +15,7 @@ namespace SequenceGenerator
         static void Main(string[] args)
         {
             JsonController.RegisterJsonAction(new Table());
+            JsonController.RegisterJsonAction(new TextInput());
             JsonConvert.DefaultSettings = JsonSettings;
 
             if(args.Count() == 0)
@@ -88,6 +89,7 @@ notes: This has additional arguments including it's own help section."); */
                 }
             }
 
+            Console.WriteLine("Complete.  Press enter to close.");
             Console.ReadLine();
         }
 
@@ -95,7 +97,8 @@ notes: This has additional arguments including it's own help section."); */
         {
             return new JsonSerializerSettings
             {
-                Formatting = Formatting.Indented
+                Formatting = Formatting.Indented,
+                DefaultValueHandling = DefaultValueHandling.Ignore
             };
         }
     }

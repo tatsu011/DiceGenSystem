@@ -50,5 +50,15 @@ namespace SequenceGenerator
             
 
         }
+
+        /// <summary>
+        /// Gets the json action without the name.
+        /// </summary>
+        /// <param name="name"></param>
+        /// <returns></returns>
+        public static JsonAction GetJsonAction(string name)
+        {
+            return null;
+        }
     }
 }

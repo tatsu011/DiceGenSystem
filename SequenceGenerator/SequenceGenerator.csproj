@@ -90,6 +90,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Actions\RepeatingTable.cs" />
+    <Compile Include="Actions\TextInput.cs" />
     <Compile Include="Creation.cs" />
     <Compile Include="Elgato\ElgatoController.cs" />
     <Compile Include="Elgato\DiceGUI\GUIDice.cs" />

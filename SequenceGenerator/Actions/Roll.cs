@@ -61,4 +61,9 @@ namespace SequenceGenerator.Actions
             return dice;
         }
     }
+
+    public enum Dice
+    {
+        coin = 2, d3, d4, d5, d6, d8 = 8, d10 = 10, d12 = 12, d20 = 20, d100 = 100, d0 = 0
+    }
 }
