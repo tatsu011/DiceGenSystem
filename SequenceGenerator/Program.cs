@@ -46,7 +46,19 @@ notes: This has additional arguments including it's own help section."); */
             if(args.Contains("-Character") || args.Contains("-character"))
             {
                 Creation creation = new Creation();
-                
+                string directory = "";
+
+
+                if(args.Contains("-sys"))
+                {
+                    //JsonController.RegisterJsonActionGroup(args.Split(' '))
+                    List<string> Largs = new List<string>(args);
+                    int sysArg = Largs.IndexOf("-sys");
+
+
+
+                }
+
             }
             
             if(args.Contains("-Dummy"))

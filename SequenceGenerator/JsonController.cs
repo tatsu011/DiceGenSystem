@@ -22,7 +22,10 @@ namespace SequenceGenerator
         {
             if(Directory.Exists(folderPath))
             {
-
+                foreach(string file in Directory.GetFiles(folderPath))
+                {
+                    Console.WriteLine(file);
+                }
             }
         }
 

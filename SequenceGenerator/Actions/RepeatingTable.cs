@@ -13,6 +13,8 @@ namespace SequenceGenerator.Actions
         public string TargetTable;
 
         public Roll roll;
+
+        int Count;
         public override string ActionType()
         {
             return actionType;
@@ -21,12 +23,20 @@ namespace SequenceGenerator.Actions
         public override void ApplyResult(ref Creation creation)
         {
             // load the target table.
+
+
+            for(int i = Count; i > 0; i--)
+            {
+
+            }
+
         }
 
         public override object CreateDummyAction()
         {
             RepeatingTable rt = new RepeatingTable();
-
+            rt.roll = new Roll();
+            roll.Die = Dice.d3;
 
 
             return rt;
