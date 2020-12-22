@@ -37,25 +37,25 @@ namespace SequenceGenerator
     }
 
 
-    public abstract class JsonAction : IJsonAction
+    public class JsonAction : IJsonAction
     {
         public string NextAction;
 
-        public abstract string ActionType();
-        public abstract void ApplyResult(ref Creation creation);
+        public virtual string ActionType() { return null; }
+        public virtual void ApplyResult(ref Creation creation) { }
 
         public string GetNextAction()
         {
             return NextAction;
         }
 
-        public abstract bool Validate();
+        public virtual bool Validate() { return true; }
 
         /// <summary>
         /// Creates a dummy action.
         /// </summary>
         /// <returns>a dummy action based off the current class.</returns>
-        public abstract object CreateDummyAction();
+        public virtual object CreateDummyAction() { return null; }
 
 
     }

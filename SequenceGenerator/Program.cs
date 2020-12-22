@@ -16,6 +16,7 @@ namespace SequenceGenerator
         {
             JsonController.RegisterJsonAction(new Table());
             JsonController.RegisterJsonAction(new TextInput());
+            JsonController.RegisterJsonAction(new RepeatingTable());
             JsonConvert.DefaultSettings = JsonSettings;
 
             if(args.Count() == 0)
@@ -43,7 +44,7 @@ notes: This has additional arguments including it's own help section."); */
                 return;
             }
 
-            if(args.Contains("-Character") || args.Contains("-character"))
+            if(args.Contains("-Create") || args.Contains("-create"))
             {
                 Creation creation = new Creation();
                 string directory = "";
@@ -53,10 +54,23 @@ notes: This has additional arguments including it's own help section."); */
                 {
                     //JsonController.RegisterJsonActionGroup(args.Split(' '))
                     List<string> Largs = new List<string>(args);
-                    int sysArg = Largs.IndexOf("-sys");
+                    int sysArg = Largs.IndexOf("-sys") + 1; //get the next index.
+                    if (Largs.Count <= sysArg)
+                    {
+                        Console.WriteLine("Creation system not mentioned (-sys argument is null) terminated.");
 
+                    }
+                    else
+                    {
+                        JsonController.RegisterJsonActionGroup(Largs[sysArg]);
+                    }
 
-
+                }
+                else
+                {
+                    Console.WriteLine("Creations requires the use of a system.  A system is a set of actions that are applied to a creation.");
+                    Console.WriteLine("Creations can be characters, worlds, history, or anything you can craft using values");
+                    Console.WriteLine("Additional arguments: -sys = The system the creation is built on.");
                 }
 
             }
@@ -99,6 +113,12 @@ notes: This has additional arguments including it's own help section."); */
 
                     Console.ReadLine();
                 }
+            }
+
+            if(args.Contains("-SyncRun"))
+            {
+                JsonController.CreateDummyFolder();
+                JsonController.RegisterJsonActionGroup("Dummy");
             }
 
             Console.WriteLine("Complete.  Press enter to close.");

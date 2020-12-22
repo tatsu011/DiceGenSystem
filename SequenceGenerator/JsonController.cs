@@ -11,7 +11,9 @@ namespace SequenceGenerator
 {
     public static class JsonController
     {
-        static Dictionary<string, JsonAction> ActionCollection = new Dictionary<string, JsonAction>();
+        static Dictionary<string, JsonAction> ActionCollection = new Dictionary<string, JsonAction>(); //Registers type.
+        static Dictionary<string, JsonAction> SequenceCollection = new Dictionary<string, JsonAction>(); //registers tables.
+
 
         public static void RegisterJsonAction(JsonAction action)
         {
@@ -25,7 +27,20 @@ namespace SequenceGenerator
                 foreach(string file in Directory.GetFiles(folderPath))
                 {
                     Console.WriteLine(file);
+                    JsonAction target = JsonConvert.DeserializeObject<JsonAction>(File.ReadAllText(file));
+
+
+
+                    string ActionName = file.Substring(file.LastIndexOf('\\') + 1 , file.LastIndexOf('.') - file.LastIndexOf('\\') - 1); 
+                    SequenceCollection.Add(ActionName, target);
+
+                    Console.WriteLine($"Loaded {ActionName} as {ActionCollection[ActionName].ActionType()}");
+
                 }
+            } 
+            else
+            {
+                Console.WriteLine($"Error: Folder '{folderPath}' not found.");
             }
         }
 
@@ -61,7 +76,15 @@ namespace SequenceGenerator
         /// <returns></returns>
         public static JsonAction GetJsonAction(string name)
         {
-            return null;
+            if(SequenceCollection.ContainsKey(name))
+            {
+                return SequenceCollection[name];
+            }
+            else
+            {
+                Console.WriteLine($"WARNING: table {name} not found.");
+                return null;
+            }
         }
     }
 }
