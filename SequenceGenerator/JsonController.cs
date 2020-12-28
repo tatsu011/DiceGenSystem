@@ -34,7 +34,7 @@ namespace SequenceGenerator
                     string ActionName = file.Substring(file.LastIndexOf('\\') + 1 , file.LastIndexOf('.') - file.LastIndexOf('\\') - 1); 
                     SequenceCollection.Add(ActionName, target);
 
-                    Console.WriteLine($"Loaded {ActionName} as {ActionCollection[ActionName].ActionType()}");
+                    Console.WriteLine($"Loaded {ActionName} as {SequenceCollection[ActionName].ActionType()}");
 
                 }
             } 
