@@ -8,14 +8,13 @@ namespace SequenceGenerator.Actions
 {
     class TextInput : JsonAction
     {
-        public string actionType = "TextInput";
         
         public string Prompt;
         public string Field;
 
-        public override string ActionType()
+        public TextInput()
         {
-            return actionType;
+            ActionType = "TextInput";
         }
 
         public override void ApplyResult(ref Creation creation)
@@ -30,7 +29,8 @@ namespace SequenceGenerator.Actions
             TextInput ti = new TextInput
             {
                 Prompt = "Enter a name",
-                Field = "Name"
+                Field = "Name",
+                NextAction = "DummyRepeatingTable"
             };
             return ti;
         }

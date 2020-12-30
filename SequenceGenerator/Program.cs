@@ -130,7 +130,9 @@ notes: This has additional arguments including it's own help section."); */
             return new JsonSerializerSettings
             {
                 Formatting = Formatting.Indented,
-                DefaultValueHandling = DefaultValueHandling.Ignore
+                DefaultValueHandling = DefaultValueHandling.Ignore,
+                TypeNameHandling = TypeNameHandling.Objects
+                
             };
         }
     }

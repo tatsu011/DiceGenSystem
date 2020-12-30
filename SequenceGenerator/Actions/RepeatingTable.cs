@@ -8,26 +8,43 @@ namespace SequenceGenerator.Actions
 {
     class RepeatingTable : JsonAction
     {
-        public string actionType = "RepeatingTable";
 
         public string TargetTable;
 
         public Roll roll;
 
         int Count;
-        public override string ActionType()
+
+        public string NextTable;
+
+        public RepeatingTable()
         {
-            return actionType;
+            ActionType = "RepeatingTable";
         }
 
         public override void ApplyResult(ref Creation creation)
         {
             // load the target table.
-
-
+            JsonAction targetTable = JsonController.GetJsonAction(TargetTable);
+            Count = roll.PerformRoll();
             for(int i = Count; i > 0; i--)
             {
-
+                targetTable.ApplyResult(ref creation);
+                if (creation.HasValue($"{TargetTable}_Adj"))
+                {
+                    int adjustment;
+                    creation.GetValue($"{TargetTable}_Adj", out adjustment);
+                    if ( adjustment != 0)
+                    {
+                        Count += adjustment;
+                        creation.SetValue($"{TargetTable}_Adj", 0);
+                    }
+                }
+                if(creation.HasValue($"{TargetTable}_Stop"))
+                {
+                    //this signal says that 'this creation step is over.  
+                    break;
+                }
             }
 
         }
@@ -36,8 +53,9 @@ namespace SequenceGenerator.Actions
         {
             RepeatingTable rt = new RepeatingTable();
             rt.roll = new Roll();
+            rt.TargetTable = "DummyTable";
             roll.Die = Dice.d3;
-
+            NextTable = "DummyTable";
 
             return rt;
         }

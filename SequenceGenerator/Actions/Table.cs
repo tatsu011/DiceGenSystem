@@ -7,13 +7,16 @@ namespace SequenceGenerator.Actions
 {
     class Table : JsonAction
     {
-        public string actionType = "RollTable";
-
         public string ModifierCheck = "";
 
         public Roll dicecheck;
 
         public Result[] results;
+
+        public Table()
+        {
+            ActionType = "RollTable";
+        }
         
         public override bool Validate()
         {
@@ -80,7 +83,7 @@ namespace SequenceGenerator.Actions
 
             if(result.TargetTable != string.Empty)
             {
-
+                JsonAction target = JsonController.GetJsonAction(result.TargetTable);
             }
         }
 
@@ -91,11 +94,6 @@ namespace SequenceGenerator.Actions
 
 
             return creation;
-        }
-
-        public override string ActionType()
-        {
-            return actionType;
         }
 
         public override object CreateDummyAction()

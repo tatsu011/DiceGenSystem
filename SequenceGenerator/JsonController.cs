@@ -17,7 +17,7 @@ namespace SequenceGenerator
 
         public static void RegisterJsonAction(JsonAction action)
         {
-            ActionCollection.Add(action.ActionType(), action);
+            ActionCollection.Add(action.ActionType, action);
         }
 
         public static void RegisterJsonActionGroup(string folderPath)
@@ -29,12 +29,12 @@ namespace SequenceGenerator
                     Console.WriteLine(file);
                     JsonAction target = JsonConvert.DeserializeObject<JsonAction>(File.ReadAllText(file));
 
+                    string ActionName = file.Substring(file.LastIndexOf('\\') + 1 , file.LastIndexOf('.') - file.LastIndexOf('\\') - 1);
+                    Console.WriteLine($"found {ActionName}, a type of {target.ActionType}");
 
-
-                    string ActionName = file.Substring(file.LastIndexOf('\\') + 1 , file.LastIndexOf('.') - file.LastIndexOf('\\') - 1); 
                     SequenceCollection.Add(ActionName, target);
 
-                    Console.WriteLine($"Loaded {ActionName} as {SequenceCollection[ActionName].ActionType()}");
+                    Console.WriteLine($"Loaded {ActionName} as {SequenceCollection[ActionName].ActionType}");
 
                 }
             } 

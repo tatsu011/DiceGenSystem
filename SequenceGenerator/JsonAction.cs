@@ -11,12 +11,6 @@ namespace SequenceGenerator
     public interface IJsonAction
     {
         /// <summary>
-        /// Gets the type of action this is.
-        /// </summary>
-        /// <returns>the type of action.</returns>
-        string ActionType();
-
-        /// <summary>
         /// Gets the next action in the sequence.
         /// </summary>
         /// <returns></returns>
@@ -41,7 +35,7 @@ namespace SequenceGenerator
     {
         public string NextAction;
 
-        public virtual string ActionType() { return null; }
+        public string ActionType { get; protected set; }
         public virtual void ApplyResult(ref Creation creation) { }
 
         public string GetNextAction()
