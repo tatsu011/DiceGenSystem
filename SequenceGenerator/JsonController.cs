@@ -65,8 +65,11 @@ namespace SequenceGenerator
                 File.WriteAllText($"{ AppContext.BaseDirectory}\\dummy\\{Filename}", contents);
             }
 
-            
-
+            string Filename = "Start.json";
+            Actions.LabelTransfer labelTransfer = new Actions.LabelTransfer();
+            labelTransfer.NextAction = "DummyLblTransfer";
+            string Contents = JsonConvert.SerializeObject(labelTransfer);
+            File.WriteAllText($"{ AppContext.BaseDirectory}\\dummy\\{Filename}", Contents);
         }
 
         /// <summary>
