@@ -65,11 +65,11 @@ namespace SequenceGenerator
                 File.WriteAllText($"{ AppContext.BaseDirectory}\\dummy\\{Filename}", contents);
             }
 
-            string Filename = "Start.json";
+            string fName = "Start.json";
             Actions.LabelTransfer labelTransfer = new Actions.LabelTransfer();
             labelTransfer.NextAction = "DummyLblTransfer";
             string Contents = JsonConvert.SerializeObject(labelTransfer);
-            File.WriteAllText($"{ AppContext.BaseDirectory}\\dummy\\{Filename}", Contents);
+            File.WriteAllText($"{ AppContext.BaseDirectory}\\dummy\\{fName}", Contents);
         }
 
         /// <summary>
@@ -88,6 +88,42 @@ namespace SequenceGenerator
                 Console.WriteLine($"WARNING: table {name} not found.");
                 return null;
             }
+        }
+
+        internal static void RunSystem()
+        {
+            if(!SequenceCollection.ContainsKey("Start"))
+            {
+                Console.WriteLine("System contains no Start.json.  No entry point defined (run -Dummy to get a basic system");
+            }
+
+            Creation creation = new Creation();
+            JsonAction startingAction = SequenceCollection["Start"];
+            startingAction.ApplyResult(ref creation);
+            JsonAction NextAction = SequenceCollection[startingAction.NextAction];
+
+
+            while (NextAction.NextAction != null)
+            {
+                NextAction.ApplyResult(ref creation);
+                NextAction = SequenceCollection[NextAction.NextAction];
+            }
+            NextAction.ApplyResult(ref creation);
+
+            string CreationData = JsonConvert.SerializeObject(creation);
+            string filename;
+
+            if(creation.HasValue("Name"))
+            {
+                creation.GetValue("Name", out filename);
+            }
+            else
+            {
+                filename = "RandomCreation";
+            }
+            Console.WriteLine("Saving creation");
+            File.WriteAllText($"{filename}.json", CreationData);
+
         }
     }
 }

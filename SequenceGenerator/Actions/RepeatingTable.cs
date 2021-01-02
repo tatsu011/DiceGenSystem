@@ -17,6 +17,8 @@ namespace SequenceGenerator.Actions
 
         public string NextTable;
 
+        public string Explanation;
+
         public RepeatingTable()
         {
             ActionType = "RepeatingTable";
@@ -25,8 +27,10 @@ namespace SequenceGenerator.Actions
         public override void ApplyResult(ref Creation creation)
         {
             // load the target table.
+            
             JsonAction targetTable = JsonController.GetJsonAction(TargetTable);
             Count = roll.PerformRoll();
+            creation.AddTableResult(string.Format(Explanation, Count));
             for(int i = Count; i > 0; i--)
             {
                 targetTable.ApplyResult(ref creation);
@@ -51,11 +55,16 @@ namespace SequenceGenerator.Actions
 
         public override object CreateDummyAction()
         {
-            RepeatingTable rt = new RepeatingTable();
-            rt.roll = new Roll();
-            rt.TargetTable = "DummyTable";
-            roll.Die = Dice.d3;
-            NextTable = "DummyTable";
+            RepeatingTable rt = new RepeatingTable()
+            {
+                roll = new Roll
+                {
+                    Die = Dice.d3
+                },
+                TargetTable = "DummyRollTable",
+                Explanation = "A thing happened {0} times",
+                NextTable = "DummyRollTable"
+            };
 
             return rt;
         }

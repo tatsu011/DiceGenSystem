@@ -16,6 +16,8 @@ namespace SequenceGenerator.Actions
 
             for(int i = 0; i < Count.GetValueOrDefault(1); i++ )
             {
+                if (Die == Dice.d0) //don't bother with d0's
+                    break;
                 value += random.Next(1, (int)Die);
             }
 

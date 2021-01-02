@@ -9,11 +9,11 @@ namespace SequenceGenerator
     public class Creation
     {
 
-        Dictionary<string, int> IntValues;
+        public Dictionary<string, int> IntValues;
         
-        Dictionary<string, string> StrValues;
+        public Dictionary<string, string> StrValues;
 
-        List<string> TableRolls;
+        public List<string> TableRolls;
 
         public Creation()
         {
@@ -47,7 +47,7 @@ namespace SequenceGenerator
 
         public bool HasValue(string target)
         {
-            return IntValues.ContainsKey(target);
+            return IntValues.ContainsKey(target) || StrValues.ContainsKey(target);
         }
         public void GetValue(string target, out int Value)
         {
@@ -73,6 +73,7 @@ namespace SequenceGenerator
 
         public void AddTableResult(string result)
         {
+            Console.WriteLine(result);
             TableRolls.Add(result);
         }
 

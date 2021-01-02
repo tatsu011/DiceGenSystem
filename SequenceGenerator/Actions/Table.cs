@@ -46,7 +46,7 @@ namespace SequenceGenerator.Actions
 
         public override void ApplyResult(ref Creation creation)
         {
-            if(ModifierCheck != "")
+            if(ModifierCheck != null)
             {
                 int bonus;
                 creation.GetValue(ModifierCheck, out bonus);
@@ -57,7 +57,7 @@ namespace SequenceGenerator.Actions
             creation.AddTableResult(result.Description);
 
             //apply result to creation (if expected.)
-            if(result.TargetValue != string.Empty)
+            if(result.TargetValue != null)
             {
                 creation.GetValue(result.TargetValue, out int value);
                 switch (result.targetOperation)
@@ -81,19 +81,13 @@ namespace SequenceGenerator.Actions
                 }
             }
 
-            if(result.TargetTable != string.Empty)
+            if(result.TargetTable != null)
             {
                 JsonAction target = JsonController.GetJsonAction(result.TargetTable);
+                if(target != null)
+                    target.ApplyResult(ref creation);
+                
             }
-        }
-
-        public Creation RollTables()
-        {
-            Creation creation = new Creation();
-
-
-
-            return creation;
         }
 
         public override object CreateDummyAction()

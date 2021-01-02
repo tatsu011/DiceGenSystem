@@ -120,6 +120,7 @@ notes: This has additional arguments including it's own help section."); */
             {
                 JsonController.CreateDummyFolder();
                 JsonController.RegisterJsonActionGroup("Dummy");
+                JsonController.RunSystem();
             }
 
             Console.WriteLine("Complete.  Press enter to close.");
