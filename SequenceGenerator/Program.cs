@@ -33,11 +33,12 @@ notes: This has additional arguments including it's own help section."); */
 
                 string argHelp = "No Arguments. \n";
                 argHelp += "Valid Arguments: \n" +
-                    "-elgato - Enables Elgato mode.  Requires an Elgato device.\n" +
+                    "-elgato - Enables Elgato mode.  Requires an Elgato device (DO NOT USE!).\n" +
                     "-roll - Rolls a set of dice with the format idx+y \n" + 
                     "Notes: this is dice notation, and the only required variable is x.\n" +
                     "-character - creates a character with various properties. \n" + 
-                    "notes: this has additional arguments.";
+                    "notes: this has additional arguments. \n" +
+                    "-SyncRun - creates the dummy system and immediately runs it.";
 
                 Console.WriteLine(argHelp);
 
@@ -45,10 +46,10 @@ notes: This has additional arguments including it's own help section."); */
                 return;
             }
 
-            if(args.Contains("-Create") || args.Contains("-create"))
+
+            if (args.Contains("-Create") || args.Contains("-create"))
             {
                 Creation creation = new Creation();
-                string directory = "";
 
 
                 if(args.Contains("-sys"))
@@ -64,14 +65,20 @@ notes: This has additional arguments including it's own help section."); */
                     else
                     {
                         JsonController.RegisterJsonActionGroup(Largs[sysArg]);
+
+                        if (args.Contains("-v"))
+                            JsonController.ValidateTables();
+
                     }
 
                 }
                 else
                 {
-                    Console.WriteLine("Creations requires the use of a system.  A system is a set of actions that are applied to a creation.");
-                    Console.WriteLine("Creations can be characters, worlds, history, or anything you can craft using values");
-                    Console.WriteLine("Additional arguments: -sys = The system the creation is built on.");
+                    Console.WriteLine("Creations requires the use of a system.  A system is a set of actions that are applied to a creation.\n" + 
+                                      "Creations can be characters, worlds, history, or anything you can craft using values \n" + 
+                                      "Additional arguments: \n" +
+                                      "-sys = The system the creation is built on. Required.  The argument after is the system name(folder in the startup path).\n" +
+                                      "-v = Validate files before running the system. Optional.");
                 }
 
             }
@@ -120,8 +127,11 @@ notes: This has additional arguments including it's own help section."); */
             {
                 JsonController.CreateDummyFolder();
                 JsonController.RegisterJsonActionGroup("Dummy");
+                JsonController.ValidateTables();
                 JsonController.RunSystem();
             }
+
+
 
             Console.WriteLine("Complete.  Press enter to close.");
             Console.ReadLine();

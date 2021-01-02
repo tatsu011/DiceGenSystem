@@ -90,6 +90,27 @@ namespace SequenceGenerator
             }
         }
 
+        internal static void ValidateTables()
+        {
+            int failedTables = 0;
+            foreach(var action in SequenceCollection)
+            {
+                if (action.Value.Validate())
+                {
+                    Console.WriteLine($"{action.Key} has passed inspection.");
+                }
+                else
+                {
+                    Console.WriteLine($"WARNING: {action.Key} DID NOT PASS INSPECTION, check {action.Key}.json!");
+                    failedTables++;
+                }
+            }
+            if(failedTables != 0)
+            {
+                Console.WriteLine($"We had {failedTables} failed actions.  Please check log.");
+            }
+        }
+
         internal static void RunSystem()
         {
             if(!SequenceCollection.ContainsKey("Start"))
