@@ -27,6 +27,11 @@ namespace SequenceGenerator
         {
             if (IntValues.ContainsKey(target))
             {
+                if(value == 0)
+                {
+                    IntValues.Remove(target);
+                }
+
                 IntValues[target] = value;
                 return true;
             }

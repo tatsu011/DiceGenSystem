@@ -41,12 +41,13 @@ namespace SequenceGenerator.Actions
                     if ( adjustment != 0)
                     {
                         Count += adjustment;
-                        creation.SetValue($"{TargetTable}_Adj", 0);
+                        creation.SetValue($"{TargetTable}_Adj", 0); //remove the adjustment from the creation.
                     }
                 }
                 if(creation.HasValue($"{TargetTable}_Stop"))
                 {
                     //this signal says that 'this creation step is over.  
+                    creation.SetValue($"{TargetTable}_Stop", 0); //remove the value from the creation.
                     break;
                 }
             }

@@ -54,7 +54,8 @@ namespace SequenceGenerator.Actions
             }
             Result result = ToResult(dicecheck.PerformRoll());
 
-            creation.AddTableResult(result.Description);
+            if(result.Description != null)
+                creation.AddTableResult(result.Description);
 
             //apply result to creation (if expected.)
             if(result.TargetValue != null)
