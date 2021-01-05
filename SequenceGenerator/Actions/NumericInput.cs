@@ -6,33 +6,35 @@ using System.Threading.Tasks;
 
 namespace SequenceGenerator.Actions
 {
-    class Roller : JsonAction
+    class NumericInput : JsonAction
     {
         public string TargetValue;
-        public Roll roll;
+        public string Prompt;
         public string Explanation;
 
 
         public override void ApplyResult(ref Creation creation)
         {
-            int value = roll.PerformRoll();
+            int value;
+            string temp = "";
+            while(!int.TryParse(temp, out value))
+            {
+                Console.WriteLine(Prompt);
+                temp = Console.ReadLine();
+            }
+
+
             creation.SetValue(TargetValue, value);
-            if(Explanation != null)
+            if (Explanation != null)
                 creation.AddTableResult(Explanation);
         }
 
         public override object CreateDummyAction()
         {
-            Roller rt = new Roller()
+            NumericInput rt = new NumericInput()
             {
-                roll = new Roll
-                {
-                    Die = Dice.d6,
-                    Count = 2,
-                    bonus = 16,
-                    
-                },
                 TargetValue = "Age",
+                Prompt = "How old are you?",
                 Explanation = "You are {0} years old"
             };
             return rt;
