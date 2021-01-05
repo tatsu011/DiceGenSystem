@@ -18,6 +18,8 @@ namespace SequenceGenerator
             JsonController.RegisterJsonAction(new TextInput());
             JsonController.RegisterJsonAction(new RepeatingTable());
             JsonController.RegisterJsonAction(new LabelTransfer());
+            JsonController.RegisterJsonAction(new Roller());
+
             JsonConvert.DefaultSettings = JsonSettings;
 
             if(args.Count() == 0)
