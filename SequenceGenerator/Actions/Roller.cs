@@ -12,6 +12,11 @@ namespace SequenceGenerator.Actions
         public Roll roll;
         public string Explanation;
 
+        public Roller()
+        {
+            ActionType = "Roller";
+        }
+
 
         public override void ApplyResult(ref Creation creation)
         {
