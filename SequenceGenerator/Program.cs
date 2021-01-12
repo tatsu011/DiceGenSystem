@@ -70,6 +70,7 @@ notes: This has additional arguments including it's own help section."); */
 
                         if (args.Contains("-v"))
                             JsonController.ValidateTables();
+                        JsonController.RunSystem();
 
                     }
 
