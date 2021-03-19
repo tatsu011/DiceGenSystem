@@ -27,9 +27,19 @@ namespace SequenceGenerator
                 foreach(string file in Directory.GetFiles(folderPath))
                 {
                     Console.WriteLine(file);
-                    JsonAction target = JsonConvert.DeserializeObject<JsonAction>(File.ReadAllText(file));
 
                     string ActionName = file.Substring(file.LastIndexOf('\\') + 1 , file.LastIndexOf('.') - file.LastIndexOf('\\') - 1);
+
+                    if(ActionName.Equals("settings"))
+                    {
+                        Console.WriteLine($"This is a settings file.  Loading it as such.");
+                        SequenceSettings.ActivateSettings(JsonConvert.DeserializeObject<SequenceSettings>(File.ReadAllText(file)));
+
+                        continue;
+                    }
+                    
+                    JsonAction target = JsonConvert.DeserializeObject<JsonAction>(File.ReadAllText(file));
+
                     Console.WriteLine($"found {ActionName}, a type of {target.ActionType}");
 
                     SequenceCollection.Add(ActionName, target);
@@ -64,6 +74,11 @@ namespace SequenceGenerator
                 string contents = JsonConvert.SerializeObject(action);
                 File.WriteAllText($"{ AppContext.BaseDirectory}\\dummy\\{Filename}", contents);
             }
+
+            SequenceSettings DummySettings = new SequenceSettings();
+            DummySettings.GenSettings.Add("Test1", 22);
+            DummySettings.GenSettings.Add("Test2", 96);
+            File.WriteAllText($"{ AppContext.BaseDirectory}\\dummy\\settings.json", JsonConvert.SerializeObject(DummySettings));
 
             string fName = "Start.json";
             Actions.LabelTransfer labelTransfer = new Actions.LabelTransfer();

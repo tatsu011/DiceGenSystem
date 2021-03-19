@@ -106,6 +106,7 @@
     <Compile Include="Result.cs" />
     <Compile Include="Actions\Roll.cs" />
     <Compile Include="Actions\Table.cs" />
+    <Compile Include="SequenceSettings.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
