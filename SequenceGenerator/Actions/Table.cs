@@ -1,4 +1,6 @@
-﻿namespace SequenceGenerator.Actions
+﻿using System;
+
+namespace SequenceGenerator.Actions
 {
     class Table : JsonAction
     {
@@ -48,6 +50,35 @@
                 dicecheck.bonus = bonus;
             }
             Result result = ToResult(dicecheck.PerformRoll());
+
+            if(result.Condition != null)
+            {
+                Console.WriteLine($"Checking for condition:{result.Condition}");
+                int setValue;
+                //do condition check.
+                if(result.Condition.StartsWith("::")) //this means that we grab not from the creation, but from settings.
+                {
+                    if(SequenceSettings.ActiveSettings.GenSettings.ContainsKey(result.Condition.Remove(0,2)))
+                    {
+                        setValue = SequenceSettings.ActiveSettings.GenSettings[result.Condition.Remove(0, 2)];
+                    }
+                    else
+                    {
+                        setValue = 0;
+                    }
+                }
+                else
+                {
+                    creation.GetValue(result.Condition, out setValue); //already has some of the checks built in.
+                }
+
+                if(setValue == result.ConditionTarget)
+                {
+                    Console.WriteLine("Condition detected, changing results");
+                    result = ToResult(result.NewResult); //conditions were confirmed, results have been changed.
+                }
+
+            }
 
             if(result.Description != null)
                 creation.AddTableResult(result.Description);
@@ -105,7 +136,11 @@
                 TargetValue = "injury",
                 targetOperation = Operation.ADD,
                 TargetTable = "Injury",
-                Value = 1
+                Value = 1,
+                Condition = "::NoExtriemes",
+                ConditionTarget = 1,
+                NewResult = 2
+                
             };
 
             table.results[1] = new Result
@@ -135,7 +170,10 @@
                 TargetTable = "Boon",
                 TargetValue = "Boost",
                 targetOperation = Operation.ADD,
-                Value = 1
+                Value = 1,
+                Condition = "::NoExtriemes",
+                ConditionTarget = 1,
+                NewResult = 19
             };
 
             return table;

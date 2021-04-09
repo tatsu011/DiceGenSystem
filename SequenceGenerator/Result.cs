@@ -8,6 +8,9 @@
         public Operation targetOperation;
         public string TargetTable;
         public int Value;
+        public string Condition; // "having anything start with a :: forces it to read settings instead of creation.
+        public int ConditionTarget;
+        public int NewResult;
     }
 
     enum Operation
