@@ -37,6 +37,7 @@ namespace SequenceGenerator.Actions
                 i += results[r].Weight;
                 r++;
             }
+            r--;
 
             return results[r];
         }
@@ -49,7 +50,10 @@ namespace SequenceGenerator.Actions
                 creation.GetValue(ModifierCheck, out bonus);
                 dicecheck.bonus = bonus;
             }
-            Result result = ToResult(dicecheck.PerformRoll());
+
+            int rollValue = dicecheck.PerformRoll();
+
+            Result result = ToResult(rollValue);
 
             if(result.Condition != null)
             {
@@ -74,7 +78,7 @@ namespace SequenceGenerator.Actions
 
                 if(setValue == result.ConditionTarget)
                 {
-                    Console.WriteLine("Condition detected, changing results");
+                    Console.WriteLine($"Condition detected, changing results from {rollValue} to {result.NewResult}");
                     result = ToResult(result.NewResult); //conditions were confirmed, results have been changed.
                 }
 
