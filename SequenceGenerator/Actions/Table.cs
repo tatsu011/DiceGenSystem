@@ -88,36 +88,43 @@ namespace SequenceGenerator.Actions
                 creation.AddTableResult(result.Description);
 
             //apply result to creation (if expected.)
-            if(result.TargetValue != null)
+            if (result.Items != null)
             {
-                creation.GetValue(result.TargetValue, out int value);
-                switch (result.targetOperation)
+                foreach (var item in result.Items)
                 {
-                    case Operation.ADD:
-                        creation.SetValue(result.TargetValue, result.Value + value);
-                        break;
-                    case Operation.SUB:
-                        creation.SetValue(result.TargetValue, value - result.Value);
-                        break;
-                    case Operation.MULTI:
-                        creation.SetValue(result.TargetValue, value * result.Value);
-                        break;
-                    case Operation.DIV:
-                        creation.SetValue(result.TargetValue, value / result.Value);
-                        break;
-                    case Operation.SET:
-                    default:
-                        creation.SetValue(result.TargetValue, result.Value); //default operation is SET.
-                        break;
-                }
-            }
 
-            if(result.TargetTable != null)
-            {
-                JsonAction target = JsonController.GetJsonAction(result.TargetTable);
-                if(target != null)
-                    target.ApplyResult(ref creation);
-                
+                    if (item.Target != null)
+                    {
+                        creation.GetValue(item.Target, out int value);
+                        switch (item.Action)
+                        {
+                            case Operation.ADD:
+                                creation.SetValue(item.Target, item.Value + value);
+                                break;
+                            case Operation.SUB:
+                                creation.SetValue(item.Target, value - item.Value);
+                                break;
+                            case Operation.MULTI:
+                                creation.SetValue(item.Target, value * item.Value);
+                                break;
+                            case Operation.DIV:
+                                creation.SetValue(item.Target, value / item.Value);
+                                break;
+                            case Operation.SET:
+                            default:
+                                creation.SetValue(item.Target, item.Value); //default operation is SET.
+                                break;
+                        }
+                    }
+
+                    if (result.TargetTable != null)
+                    {
+                        JsonAction target = JsonController.GetJsonAction(result.TargetTable);
+                        if (target != null)
+                            target.ApplyResult(ref creation);
+
+                    }
+                }
             }
         }
 
@@ -136,16 +143,25 @@ namespace SequenceGenerator.Actions
             table.results[0] = new Result
             {
                 Weight = 1,
-                Description = "You had a bad fall.  Add an injury.",
-                TargetValue = "injury",
-                targetOperation = Operation.ADD,
+                Description = "You had a bad fall.  Add an injury and an incident.",
                 TargetTable = "Injury",
-                Value = 1,
                 Condition = "::NoExtriemes",
                 ConditionTarget = 1,
                 NewResult = 2
                 
             };
+            table.results[0].Items = new ValueOperation[2];
+            table.results[0].Items[0] = new ValueOperation
+            {
+                Target = "Injury",
+                Value = 1
+            };
+            table.results[0].Items[1] = new ValueOperation
+            {
+                Target = "Incident",
+                Value = 1
+            };
+
 
             table.results[1] = new Result
             {
@@ -172,12 +188,16 @@ namespace SequenceGenerator.Actions
                 Weight = 1,
                 Description = "This is a glorious performance",
                 TargetTable = "Boon",
-                TargetValue = "Boost",
-                targetOperation = Operation.ADD,
-                Value = 1,
                 Condition = "::NoExtriemes",
                 ConditionTarget = 1,
                 NewResult = 19
+            };
+            table.results[4].Items = new ValueOperation[1];
+            table.results[4].Items[0] = new ValueOperation
+            {
+                Target = "Boon",
+                Action = Operation.SET,
+                Value = 2
             };
 
             return table;
